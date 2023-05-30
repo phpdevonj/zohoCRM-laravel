@@ -27,7 +27,7 @@ class LeadsController extends Controller
         try {
 
             // API call to get an access token from zoho using refresh token, client-id and client-secret
-            $fetchRefreshToken = $client->post('https://accounts.zoho.in/oauth/v2/token', [
+            $fetchRefreshToken = $client->post(env('ZOHO_GET_ACCESS_TOKEN_API'), [
                 'form_params' => [
                     'refresh_token' => env('ZOHO_REFRESH_TOKEN'),
                     'client_id' => env('ZOHO_CLIENT_ID'),
@@ -66,7 +66,7 @@ class LeadsController extends Controller
 
         //API call to fetch the most recent 5 leads
         try {
-            $fetchLeads = $client->get('https://www.zohoapis.in/crm/v2/Leads', [
+            $fetchLeads = $client->get(env('ZOHO_GET_LEADS_API'), [
                 'headers' => [
                     'Authorization' => 'Zoho-oauthtoken ' . $accessToken,
                     'Content-Type' => 'application/json',
@@ -131,7 +131,7 @@ class LeadsController extends Controller
         ]);
 
         try {
-            $fetchLeads = $client->post('https://www.zohoapis.in/crm/v2/Leads/upsert', [
+            $fetchLeads = $client->post(env('ZOHO_UPSERT_LEADS_API'), [
                 'headers' => [
                     'Authorization' => 'Zoho-oauthtoken ' . $accessToken,
                     'Content-Type' => 'application/json',
